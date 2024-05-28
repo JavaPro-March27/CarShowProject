@@ -8,7 +8,8 @@ import java.util.List;
 public interface CarService {
 
     public List<Car> getAllCars();
-    public void  createCar(Car car);
-    public void updateCar();
-    public void deleteCar();
+    public Car  createCar(Car car);
+    public Car updateCar(long id, Car updatedCar);
+    public long deleteCar(long id);
+    public Car getCarById(long id);
 }
