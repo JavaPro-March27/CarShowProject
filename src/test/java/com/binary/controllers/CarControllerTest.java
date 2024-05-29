@@ -1,6 +1,7 @@
 package com.binary.controllers;
 
 
+import com.binary.dtos.CarDto;
 import com.binary.entities.Car;
 import com.binary.services.CarServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -70,7 +71,7 @@ public class CarControllerTest {
      @DisplayName("Car controller createCar success test case")
      public void carController_createCar_success(){
 
-            Car carBeforeCreated = new Car();
+            CarDto carBeforeCreated = new CarDto();
             carBeforeCreated.setModel("xyz");
 
 

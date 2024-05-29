@@ -1,6 +1,8 @@
 package com.binary.services;
 
+import com.binary.dtos.CarDto;
 import com.binary.entities.Car;
+import com.binary.exceptions.CarNotFoundException;
 import com.binary.repositories.CarRepository;
 import com.binary.repositories.OwnerRepository;
 import lombok.Setter;
@@ -25,14 +27,21 @@ public class CarServiceImpl implements  CarService{
     }
 
     @Override
-    public Car createCar(Car car) {
+    public Car createCar(CarDto cardto) {
 
-        if(car == null){
-            return null;
+
+        if(cardto.getOwner() != null && cardto.getOwner().getOwnerId() == null){
+                ownerRepository.save(cardto.getOwner());
         }
-        if(car.getOwner() != null && car.getOwner().getOwnerId() == null){
-                ownerRepository.save(car.getOwner());
-        }
+
+        Car car = new Car();
+        car.setBrand(cardto.getBrand());
+        car.setModel(cardto.getModel());
+        car.setColor(cardto.getColor());
+        car.setYear(cardto.getYear());
+        car.setRegisterNumber(cardto.getRegisterNumber());
+        car.setPrice(cardto.getPrice());
+        car.setOwner(cardto.getOwner());
 
        Car savedCar = carRepository.save(car);
 
@@ -62,9 +71,10 @@ public class CarServiceImpl implements  CarService{
 
             carRepository.save(optionalCar.get());
             return  optionalCar.get();
+        } else{
+            throw new CarNotFoundException("Requested car with id: " + id +  " does not exit in our system");
         }
 
-        return null;
     }
 
 
@@ -74,19 +84,19 @@ public class CarServiceImpl implements  CarService{
         if(optionalCar.isPresent()){
             carRepository.deleteById(id);
             return  id;
+        }else{
+            throw new CarNotFoundException("Requested car with id: " + id +  " does not exit in our system");
         }
-        return 0;
     }
 
 
 
     @Override
-    public Car getCarById(long id) {
+    public Car getCarById(long id) throws CarNotFoundException{
         Optional<Car> car = carRepository.findById(id);
-        if(car.isPresent()){
-            return  car.get();
-        }else{
-            return  null;
-        }
+          if(car.isEmpty()){
+              throw new CarNotFoundException("Requested car with id: " + id +  " does not exit in our system");
+          }
+          return car.get();
     }
 }
