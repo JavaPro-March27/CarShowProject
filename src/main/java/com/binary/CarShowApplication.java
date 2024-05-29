@@ -1,6 +1,7 @@
 package com.binary;
 
 import com.binary.entities.Car;
+import com.binary.entities.Member;
 import com.binary.entities.Owner;
 import com.binary.repositories.CarRepository;
 import com.binary.repositories.OwnerRepository;
