@@ -1,7 +1,6 @@
 package com.binary.config;
 
 import com.binary.entities.Member;
-import com.binary.services.MemberService;
 import com.binary.services.MemberServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
